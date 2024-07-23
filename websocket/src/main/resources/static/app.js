@@ -1,3 +1,5 @@
+// Create a STOMP client
+// STOMP 클라이언트는 using ws:// 또는 wss:// URL을 사용하는 STOMP 서버와 통신.
 const stompClient = new StompJs.Client({
     brokerURL: 'ws://localhost:8080/gs-guide-websocket'
 });
@@ -5,7 +7,10 @@ const stompClient = new StompJs.Client({
 stompClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Connected: ' + frame);
+
+    // 구독
     stompClient.subscribe('/topic/greetings', (greeting) => {
+        console.log("Greeting: " + greeting.body);
         showGreeting(JSON.parse(greeting.body).content);
     });
 };
@@ -36,12 +41,24 @@ function connect() {
 }
 
 function disconnect() {
+    // 활성화된 연결이 있다면, reconnect 시도를 멈추고 disconnect
     stompClient.deactivate();
     setConnected(false);
     console.log("Disconnected");
 }
 
 function sendName() {
+    /*
+        클라이언트가 서버와 연결됐다면, publish()를 사용해서 STOMP 메시지를 보낼 수 있음.
+        version 5 이상부터는 binary 메시지를 보낼 수 있음.
+        client.public({
+            destination: "topic/special",
+            binaryBody: binaryData,
+            headers: { "content-type" : "application/octet-stream"},
+        });
+    */
+
+    // 발행
     stompClient.publish({
         destination: "/app/hello",
         body: JSON.stringify({'name': $("#name").val()})
