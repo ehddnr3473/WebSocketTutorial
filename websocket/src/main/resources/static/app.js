@@ -9,9 +9,9 @@ stompClient.onConnect = (frame) => {
     console.log('Connected: ' + frame);
 
     // 구독
-    stompClient.subscribe('/topic/greetings', (greeting) => {
-        console.log("Greeting: " + greeting.body);
-        showGreeting(JSON.parse(greeting.body).content);
+    stompClient.subscribe('/topic/greetings', (messageOutput) => {
+        console.log("Greeting: " + messageOutput.body);
+        showGreeting(JSON.parse(messageOutput.body).content);
     });
 };
 

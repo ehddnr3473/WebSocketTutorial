@@ -4,8 +4,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
-import tutorial.websocket.message.Greeting;
-import tutorial.websocket.message.HelloMessage;
+import tutorial.websocket.message.MessageOutput;
+import tutorial.websocket.message.MessageInput;
 
 @Controller
 public class GreetingController {
@@ -21,8 +21,7 @@ public class GreetingController {
      */
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
-        return new Greeting(HtmlUtils.htmlEscape(message.getName()) + ": " + HtmlUtils.htmlEscape(message.getMessage()));
+    public MessageOutput greeting(MessageInput message) throws Exception {
+        return new MessageOutput(HtmlUtils.htmlEscape(message.getName()) + ": " + HtmlUtils.htmlEscape(message.getMessage()));
     }
-
 }

@@ -1,10 +1,10 @@
 package tutorial.websocket.message;
 
-public class Greeting {
+public class MessageOutput {
 
     private String content;
 
-    public Greeting(String content) {
+    public MessageOutput(String content) {
         this.content = content;
     }
 

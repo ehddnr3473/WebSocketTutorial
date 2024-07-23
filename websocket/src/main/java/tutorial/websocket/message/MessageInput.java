@@ -1,13 +1,13 @@
 package tutorial.websocket.message;
 
-public class HelloMessage {
+public class MessageInput {
 
     private String name;
     private String message;
 
-    public HelloMessage() {}
+    public MessageInput() {}
 
-    public HelloMessage(String name, String message) {
+    public MessageInput(String name, String message) {
         this.name = name;
         this.message = message;
     }
