@@ -47,21 +47,26 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendName() {
+function sendMessage() {
     /*
         클라이언트가 서버와 연결됐다면, publish()를 사용해서 STOMP 메시지를 보낼 수 있음.
         version 5 이상부터는 binary 메시지를 보낼 수 있음.
-        client.public({
+        client.publish({
             destination: "topic/special",
             binaryBody: binaryData,
             headers: { "content-type" : "application/octet-stream"},
         });
     */
 
+    const message = {
+        "name" : $("#name").val(),
+        "message" : $("#message").val()
+    };
+
     // 발행
     stompClient.publish({
         destination: "/app/hello",
-        body: JSON.stringify({'name': $("#name").val()})
+        body: JSON.stringify(message)
     });
 }
 
@@ -73,5 +78,5 @@ $(function () {
     $("form").on('submit', (e) => e.preventDefault());
     $( "#connect" ).click(() => connect());
     $( "#disconnect" ).click(() => disconnect());
-    $( "#send" ).click(() => sendName());
+    $( "#send" ).click(() => sendMessage());
 });
